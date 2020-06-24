@@ -16,6 +16,7 @@ Options::Options(QWidget *parent) :
 
 void Options::setUpConnections()
 {
+    //game items properties
     connect(ui->ball_size_slider,&QSlider::valueChanged,
             [this](const int &val)->void{ui->ball_size_edit->setText(QString::number(val/10.0));});
     connect(ui->ball_speed_slider,&QSlider::valueChanged,
@@ -25,30 +26,66 @@ void Options::setUpConnections()
     connect(ui->player_speed_slider,&QSlider::valueChanged,
             [this](const int &val)->void{ui->player_speed_edit->setText(QString::number(val/10.0));});
 
-    connect(ui->sound_slider,&QSlider::valueChanged,
-            [this](const int &val)->void{ui->sound_edit->setText(QString::number(val));});
-
+    //sounds
     connect(ui->sound_slider, &QSlider::valueChanged,
-            [this](const int &val)->void{if(val==0) ui->mute_check_box->setChecked(true);
-                                         else {ui->mute_check_box->setChecked(false);
-                                          voiceLevel = val;}});
+            [this](const int &val)->void{
+                                             if(val==0)
+                                                 ui->mute_check_box->setChecked(true);
+                                             else
+                                             {
+                                                 ui->mute_check_box->setChecked(false);
+                                                 voiceLevel = val;
+                                             }
+                                             ui->sound_edit->setText(QString::number(val));
+                                         }
+            );
     connect(ui->mute_check_box, &QCheckBox::stateChanged,
-            [this]()->void{if(ui->mute_check_box->isChecked())ui->sound_slider->setValue(0);
-                           else ui->sound_slider->setValue(voiceLevel);});
+            [this]()->void{
+                               if(ui->mute_check_box->isChecked())
+                                   ui->sound_slider->setValue(0);
+                               else
+                                   ui->sound_slider->setValue(voiceLevel);
+                           }
+            );
+
+    //game control
     connect(ui->endless_check_box, &QCheckBox::stateChanged,
-            [this]()->void{if(ui->endless_check_box->isChecked())ui->score_to_win_spin_box->setEnabled(false);
-                           else ui->score_to_win_spin_box->setEnabled(true);});
+            [this]()->void{
+                               if(ui->endless_check_box->isChecked())
+                                   ui->score_to_win_spin_box->setEnabled(false);
+                               else
+                                   ui->score_to_win_spin_box->setEnabled(true);
+                          }
+            );
 
     connect(ui->mouse_mode_radio_button, &QRadioButton::clicked,
-            [this](const bool &val)->void{if(val == false) {ui->keyboard_mode_radio_button->setChecked(val);
-                                                           ui->mouse_mode_radio_button->setChecked(!val);}
-                                          else {ui->keyboard_mode_radio_button->setChecked(!val);
-                                                ui->mouse_mode_radio_button->setChecked(val);}});
+            [this](const bool &val)->void{
+                                             if(val == false)
+                                             {
+                                                 ui->keyboard_mode_radio_button->setChecked(val);
+                                                 ui->mouse_mode_radio_button->setChecked(!val);
+                                             }
+                                             else
+                                             {
+                                                 ui->keyboard_mode_radio_button->setChecked(!val);
+                                                 ui->mouse_mode_radio_button->setChecked(val);
+                                             }
+                                          }
+            );
     connect(ui->keyboard_mode_radio_button, &QRadioButton::clicked,
-            [this](const bool &val)->void{if(val == false) {ui->keyboard_mode_radio_button->setChecked(!val);
-                                                            ui->mouse_mode_radio_button->setChecked(val);}
-                                          else {ui->keyboard_mode_radio_button->setChecked(val);
-                                                ui->mouse_mode_radio_button->setChecked(!val);}});
+            [this](const bool &val)->void{
+                                             if(val == false)
+                                             {
+                                                 ui->keyboard_mode_radio_button->setChecked(!val);
+                                                 ui->mouse_mode_radio_button->setChecked(val);
+                                             }
+                                             else
+                                             {
+                                                 ui->keyboard_mode_radio_button->setChecked(val);
+                                                 ui->mouse_mode_radio_button->setChecked(!val);
+                                             }
+                                          }
+            );
 }
 
 int Options::getVoiceLevel()

@@ -20,7 +20,6 @@ public:
     double getBallSpeed();
     double getPlayerSize();
     double getPlayerSpeed();
-    //bool getMuted();
     int getSound();
     bool getMouseMode();
     bool getKeyboardMode();

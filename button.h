@@ -16,7 +16,6 @@ class Button : public QObject, public QGraphicsRectItem
 private:
     QGraphicsTextItem *text;
     QMediaPlayer *clickedSound, *hoverSound;
-    //bool muted = false;
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);

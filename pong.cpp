@@ -17,9 +17,13 @@
 
 bool PONG::running =false;
 bool PONG::paused = false;
+
+
 bool PONG::mainMenu = false;
 bool PONG::dialogWindow = false;
 bool PONG::muted = false;
+
+
 unsigned int PONG::oldWidth = Size::Width;
 unsigned int PONG::oldHeight = Size::Height;
 
@@ -148,7 +152,7 @@ void PONG::setupStuff()
     actPause->setIcon(QIcon(":/icons/Button-Pause-icon.png"));
     actQuit->setIcon(QIcon(":/icons/Button-Close.png"));
     actOptions->setIcon(QIcon(":/icons/Settings-5-icon.png"));
-    actMute->setIcon(QIcon(":/icons/Sound-on.png"));
+    actMute->setIcon(QIcon(":/icons/Sound-off-icon.png"));
     actInfo->setIcon(QIcon(":/icons/Info-icon.png"));
 
     //toolbar
@@ -225,12 +229,12 @@ void PONG::mute()
     if(Size::soundLevel)
     {
         Size::soundLevel = 0;
-        actMute->setIcon(QIcon(":/icons/Sound-off-icon.png"));
+        actMute->setIcon(QIcon(":/icons/Sound-on.png"));
     }
     else
     {
         Size::soundLevel = opt->getVoiceLevel();
-        actMute->setIcon(QIcon(":/icons/Sound-on.png"));
+        actMute->setIcon(QIcon(":/icons/Sound-off-icon.png"));
     }
 
     borderSound->setVolume(Size::soundLevel);
@@ -239,6 +243,7 @@ void PONG::mute()
         gameLoopSound->play();
     else
         gameLoopSound->stop();
+
     clickedSound->setVolume(Size::soundLevel);
     ball->mute(Size::soundLevel);
     rRacket->mute(Size::soundLevel);
@@ -282,9 +287,9 @@ void PONG::processNewSettings()
     Size::playerSizeConst = opt->getPlayerSize();
     Size::playerSpeedConst = opt->getPlayerSpeed() * Size::ballSpeedConst;
     if(!Size::soundLevel && opt->getSound())
-        actMute->setIcon(QIcon(":/icons/Sound-on.png"));
-    if(Size::soundLevel && !opt->getSound())
         actMute->setIcon(QIcon(":/icons/Sound-off-icon.png"));
+    if(Size::soundLevel && !opt->getSound())
+        actMute->setIcon(QIcon(":/icons/Sound-on.png"));
     Size::soundLevel = opt->getSound();
     Size::scoreToWin = opt->getScoreToWin();
     Size::endlessGame = opt->getEndlessGame();
