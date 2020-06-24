@@ -6,7 +6,7 @@
 Ball::Ball(QGraphicsItem *parent)
     :QGraphicsRectItem(parent)
 {
-    setRect(0 , 0 , Size::Height/41*Size::ballSizeConst , Size::Height/41*Size::ballSizeConst);
+    setRect(0 , 0 , Global::Height/41*Global::ballSizeConst , Global::Height/41*Global::ballSizeConst);
     reflect_sound = new QMediaPlayer;
     reflect_sound->setMedia(QUrl("qrc:/sounds/reflect.mp3"));
 
@@ -14,8 +14,8 @@ Ball::Ball(QGraphicsItem *parent)
 
 void Ball::resize()
 {
-    setRect(0 , 0 , Size::Height/41*Size::ballSizeConst , Size::Height/41*Size::ballSizeConst);
-    speed = Size::Height/343.0 * Size::ballSpeedConst;
+    setRect(0 , 0 , Global::Height/41*Global::ballSizeConst , Global::Height/41*Global::ballSizeConst);
+    speed = Global::Height/343.0 * Global::ballSpeedConst;
     dx = speed*1.80;
     dy = random(-speed,speed);
 }
@@ -25,7 +25,7 @@ void Ball::soundPlay()
     reflect_sound->play();
 }
 
-void Ball::mute(int sound)
+void Ball::setVolume(int sound)
 {
     reflect_sound->setVolume(sound);
 }

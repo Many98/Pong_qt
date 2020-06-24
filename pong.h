@@ -37,11 +37,6 @@ private:
     static bool running;                     //game states
     static bool paused;
 
-
-    static bool mainMenu;       // unnecessary
-    static bool dialogWindow;  //looks like it is not necessary
-    static bool muted;         // unnecesary
-
     void addGameItems();
     void addMainMenuItems();
     void addPauseMenuItems();
@@ -67,6 +62,7 @@ protected:
 
 public:
     PONG(QWidget *parent = 0);
+    void setVolume();
     ~PONG();
 
 private slots:
@@ -79,14 +75,14 @@ private slots:
     void resizeItems();
     void playBorderSound();
     void playClickedSound();
-    void mute();  //also unmute game according to static variable muted
-    void setSound();
-    void showInfo();
-    void showSettings();
+    void mute();  //also unmute game
+    void showDialogWindow(QDialog &dialog);
+   // void showInfo();
+    //void showSettings();
     void processNewSettings();
-    void pauseGame();  //also resume game according to static variable running (ONLY GAME)
+    void pauseGame();  //also resume game according to static variable running
     void resumeAfterDialogWindow(); //resume but unlike pauseGame this function differentiete
-                                    //between PAUSED,RUNNING and MAINMENU state
+                                    //between PAUSED,RUNNING and MAINMENU(!PAUSED && !RUNNING) state
 signals:
     void ballRacketCollision();
     void ballLeftBorderCollision();

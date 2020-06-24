@@ -118,7 +118,7 @@ int Options::getSound()
     return ui->sound_edit->text().toInt();
 }
 
-void Options::setSound(int volume)
+void Options::setVolume(int volume)
 {
     ui->sound_slider->setValue(volume);
 }

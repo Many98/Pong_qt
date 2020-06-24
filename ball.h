@@ -14,7 +14,7 @@ class Ball : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 private:
-    double speed = Size::Height/343.0 * Size::ballSpeedConst;
+    double speed = Global::Height/343.0 * Global::ballSpeedConst;
     double dx = speed * 1.80;
     double dy = random(-speed,speed);
     Side Turn = Left;
@@ -26,7 +26,8 @@ public:
     void move();
     double getDX() const;
     void resize();
-    void mute(int sound);
+    void setVolume(int sound);  //set volume
+    void changeTurn();
 
 public slots:
 
@@ -34,7 +35,6 @@ public slots:
     void reflectY();
     void changeDY();  //random change after racket collision
     void soundPlay();
-    void changeTurn();
 
 signals:
     void ballMovedUp();

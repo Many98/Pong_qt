@@ -8,7 +8,7 @@
 Racket::Racket(int side)
     : side(side),score(0)
 {
-    setRect(0 , 0 , Size::Width/55.0 ,Size::Height/5.0*Size::playerSizeConst ); //set position and shape
+    setRect(0 , 0 , Global::Width/55.0 ,Global::Height/5.0*Global::playerSizeConst ); //set position and shape
     score_sound = new QMediaPlayer;
     score_sound->setMedia(QUrl("qrc:/sounds/coin.wav"));
 }
@@ -30,8 +30,8 @@ void Racket::moveUp()
 
 void Racket::moveDown()
 {
-    if(y()+rect().height() > Size::Height)
-        setPos(x(),Size::Height-rect().height());
+    if(y()+rect().height() > Global::Height)
+        setPos(x(),Global::Height-rect().height());
     setPos(x(),y() + speed);
 }
 
@@ -42,8 +42,8 @@ void Racket::resetScore()
 
 void Racket::resize()
 {
-    setRect(0 , 0 , Size::Width/55.0 , Size::Height/5.0*Size::playerSizeConst );
-    speed = Size::Height/410.0*Size::playerSpeedConst;
+    setRect(0 , 0 , Global::Width/55.0 , Global::Height/5.0*Global::playerSizeConst );
+    speed = Global::Height/410.0*Global::playerSpeedConst;
 }
 
 void Racket::changeDirection(Dir dir)

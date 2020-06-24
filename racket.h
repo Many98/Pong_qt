@@ -14,7 +14,7 @@ private:
     int side;
     bool aiMode = false;
     int score;
-    double speed = Size::Height/410.0 * Size::playerSpeedConst ;
+    double speed = Global::Height/410.0 * Global::playerSpeedConst ;
     Dir direction = Stop;
     QMediaPlayer  *score_sound;
 

@@ -10,7 +10,7 @@ Button::Button(QString name, QGraphicsItem *parent)
     :QGraphicsRectItem(parent)
 {
     //draw the rect
-     setRect(0,0,Size::Width/3.85,Size::Height/10.2);
+     setRect(0,0,Global::Width/3.85,Global::Height/10.2);
      QBrush brush;
      brush.setStyle(Qt::SolidPattern);
      brush.setColor(Qt::darkMagenta);
@@ -20,7 +20,7 @@ Button::Button(QString name, QGraphicsItem *parent)
      text = new QGraphicsTextItem(name,this);
      text->setPos(rect().width()/2 - text->boundingRect().width()/2,
                   rect().height()/2 - text->boundingRect().height()/2);
-     text->setFont(QFont("Times", Size::Height/110.0 + Size::Width/192.0, QFont::Bold));
+     text->setFont(QFont("Times", Global::Height/110.0 + Global::Width/192.0, QFont::Bold));
 
      clickedSound = new QMediaPlayer;
      hoverSound = new QMediaPlayer;
@@ -32,10 +32,10 @@ Button::Button(QString name, QGraphicsItem *parent)
 
 void Button::resize()
 {
-    setRect(0,0,Size::Width/3.85,Size::Height/10.2);
+    setRect(0,0,Global::Width/3.85,Global::Height/10.2);
     text->setPos(rect().width()/2 - text->boundingRect().width()/2,
                  rect().height()/2 - text->boundingRect().height()/2);
-    text->setFont(QFont("Times", Size::Height/110.0 + Size::Width/192.0, QFont::Bold));
+    text->setFont(QFont("Times", Global::Height/110.0 + Global::Width/192.0, QFont::Bold));
 
 }
 
@@ -61,7 +61,7 @@ void Button::playClickedSound()
     clickedSound->play();
 }
 
-void Button::mute(int sound)
+void Button::setVolume(int sound)
 {
     clickedSound->setVolume(sound);
     hoverSound->setVolume(sound);

@@ -25,7 +25,7 @@ public:
     Button(QString name, QGraphicsItem *parent = nullptr);
     ~Button() = default;
     void resize();
-    void mute(int sound);
+    void setVolume(int sound);
 
 public slots:
     void playClickedSound();

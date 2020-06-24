@@ -28,7 +28,7 @@ public:
     static int getVoiceLevel();
 
 public slots:
-    void setSound(int volume);
+    void setVolume(int volume);
 
 
 private:

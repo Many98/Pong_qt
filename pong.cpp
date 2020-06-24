@@ -18,14 +18,8 @@
 bool PONG::running =false;
 bool PONG::paused = false;
 
-
-bool PONG::mainMenu = false;
-bool PONG::dialogWindow = false;
-bool PONG::muted = false;
-
-
-unsigned int PONG::oldWidth = Size::Width;
-unsigned int PONG::oldHeight = Size::Height;
+unsigned int PONG::oldWidth = Global::Width;
+unsigned int PONG::oldHeight = Global::Height;
 
 
 PONG::PONG(QWidget *parent)
@@ -46,7 +40,7 @@ PONG::PONG(QWidget *parent)
 
 void PONG::resizeItems()
 {
-    scene->setSceneRect(0,0,Size::Width,Size::Height);
+    scene->setSceneRect(0,0,Global::Width,Global::Height);
 
     //resize game items
     ball->resize();
@@ -68,20 +62,19 @@ void PONG::resizeItems()
 
 void PONG::setPositions()
 {
-    //ball->setPos(Size::Width/2,Size::Height/2); //now it get same local coordinates as scene
     centerPosition();
 
-    btnOnePlayer->setPos(Size::Width/2.7,Size::Height/20.5);
-    btnTwoPlayers->setPos(Size::Width/2.7,Size::Height/4.1);
-    btnOptions->setPos(Size::Width/2.7,Size::Height/2.28);
-    btnQuit->setPos(Size::Width/2.7,Size::Height/1.58);
-    btnNewGame->setPos(Size::Width/2.7,Size::Height/20.5);
-    btnResume->setPos(Size::Width/2.7,Size::Height/4.1);
+    btnOnePlayer->setPos(Global::Width/2.7,Global::Height/20.5);
+    btnTwoPlayers->setPos(Global::Width/2.7,Global::Height/4.1);
+    btnOptions->setPos(Global::Width/2.7,Global::Height/2.28);
+    btnQuit->setPos(Global::Width/2.7,Global::Height/1.58);
+    btnNewGame->setPos(Global::Width/2.7,Global::Height/20.5);
+    btnResume->setPos(Global::Width/2.7,Global::Height/4.1);
 
-    rScore->setPos(Size::Width*6.5/10.0,0);
-    lScore->setPos(Size::Width*3.1/10.0,0);
-    rScore->setFont(QFont("Times", Size::Height/20.0 + Size::Width/80.0, QFont::Bold));
-    lScore->setFont(QFont("Times", Size::Height/20.0 + Size::Width/80.0, QFont::Bold));
+    rScore->setPos(Global::Width*6.5/10.0,0);
+    lScore->setPos(Global::Width*3.1/10.0,0);
+    rScore->setFont(QFont("Times", Global::Height/20.0 + Global::Width/80.0, QFont::Bold));
+    lScore->setFont(QFont("Times", Global::Height/20.0 + Global::Width/80.0, QFont::Bold));
 
 }
 
@@ -97,7 +90,7 @@ void PONG::init()
     //items
     timer = new QTimer(this);
     opt = new Options();
-    scene = new QGraphicsScene(0,0,Size::Width,Size::Height);
+    scene = new QGraphicsScene(0,0,Global::Width,Global::Height);
     main = new QMainWindow();
     //buttons
     btnOnePlayer = new Button("One Player");
@@ -142,7 +135,7 @@ void PONG::setupStuff()
     clickedSound->setMedia(QUrl("qrc:/sounds/decrase.wav"));
 
     //main window
-    main->setGeometry(0,0,Size::Width,Size::Height);
+    main->setGeometry(0,0,Global::Width,Global::Height);
     main->setWindowTitle("PONG");
     main->setCentralWidget(this);
 
@@ -180,12 +173,10 @@ void PONG::setupConnections()
     connect(this, SIGNAL(ballHorizontalBorderCollision()), ball, SLOT(reflectY()));
     connect(this, SIGNAL(ballHorizontalBorderCollision()), this, SLOT(playBorderSound()));
 
-    //connect(this, SIGNAL(ballLeftBorderCollision()), ball, SLOT(changeTurn()));
     connect(this, SIGNAL(ballLeftBorderCollision()), rRacket, SLOT(increaseScore()));
     connect(this, SIGNAL(ballLeftBorderCollision()), this, SLOT(displayNewScore()));
     connect(this, SIGNAL(ballLeftBorderCollision()), this, SLOT(centerPosition()));
 
-    //connect(this, SIGNAL(ballRightBorderCollision()), ball, SLOT(changeTurn()));
     connect(this, SIGNAL(ballRightBorderCollision()), lRacket, SLOT(increaseScore()));
     connect(this, SIGNAL(ballRightBorderCollision()), this, SLOT(displayNewScore()));
     connect(this, SIGNAL(ballRightBorderCollision()), this, SLOT(centerPosition()));
@@ -212,10 +203,13 @@ void PONG::setupConnections()
     connect(actPause, SIGNAL(triggered(bool)), this, SLOT(pauseGame()));
     connect(actPause, SIGNAL(triggered(bool)), this, SLOT(playClickedSound()));
     connect(actMute, SIGNAL(triggered(bool)), this, SLOT(mute()));
-    //connect(actMute, &QAction::triggered, [opt]()->void{opt->setSound(Size::soundLevel);});
     connect(actMute, SIGNAL(triggered(bool)), this, SLOT(playClickedSound()));
     connect(actOptions, SIGNAL(triggered(bool)), this, SLOT(playClickedSound()));
-    connect(actOptions, SIGNAL(triggered(bool)), this, SLOT(showSettings()));
+    connect(actOptions, &QAction::triggered,
+            [this]()->void{
+                              showDialogWindow(*opt);
+                          }
+            );
     connect(actInfo, SIGNAL(triggered(bool)), this, SLOT(showInfo()));
     connect(actInfo, SIGNAL(triggered(bool)), this, SLOT(playClickedSound()));
 
@@ -226,84 +220,92 @@ void PONG::setupConnections()
 
 void PONG::mute()
 {
-    if(Size::soundLevel)
+    if(Global::soundLevel)
     {
-        Size::soundLevel = 0;
+        Global::soundLevel = 0;
         actMute->setIcon(QIcon(":/icons/Sound-on.png"));
     }
     else
     {
-        Size::soundLevel = opt->getVoiceLevel();
+        Global::soundLevel = opt->getVoiceLevel();
         actMute->setIcon(QIcon(":/icons/Sound-off-icon.png"));
     }
 
-    borderSound->setVolume(Size::soundLevel);
-    gameLoopSound->setVolume(Size::soundLevel);
-    if(Size::soundLevel && PONG::running)  //PONG::muted
-        gameLoopSound->play();
-    else
-        gameLoopSound->stop();
+    this->setVolume(); //sets volume level on all items
 
-    clickedSound->setVolume(Size::soundLevel);
-    ball->mute(Size::soundLevel);
-    rRacket->mute(Size::soundLevel);
-    lRacket->mute(Size::soundLevel);
-    btnNewGame->mute(Size::soundLevel);
-    btnOnePlayer->mute(Size::soundLevel);
-    btnTwoPlayers->mute(Size::soundLevel);
-    btnOptions->mute(Size::soundLevel);
-    btnResume->mute(Size::soundLevel);
-    btnQuit->mute(Size::soundLevel);
-
-    opt->setSound(Size::soundLevel);
+    opt->setVolume(Global::soundLevel); //sets volume level in settings
 }
 
-void PONG::setSound()
+void PONG::setVolume()
 {
 
-    borderSound->setVolume(Size::soundLevel);
-    gameLoopSound->setVolume(Size::soundLevel);
-    if(Size::soundLevel && PONG::running)  //PONG::muted
+    borderSound->setVolume(Global::soundLevel);
+    gameLoopSound->setVolume(Global::soundLevel);
+    if(Global::soundLevel && PONG::running)
         gameLoopSound->play();
     else
         gameLoopSound->stop();
-    clickedSound->setVolume(Size::soundLevel);
-    ball->mute(Size::soundLevel);
-    rRacket->mute(Size::soundLevel);
-    lRacket->mute(Size::soundLevel);
-    btnNewGame->mute(Size::soundLevel);
-    btnOnePlayer->mute(Size::soundLevel);
-    btnTwoPlayers->mute(Size::soundLevel);
-    btnOptions->mute(Size::soundLevel);
-    btnResume->mute(Size::soundLevel);
-    btnQuit->mute(Size::soundLevel);
+    clickedSound->setVolume(Global::soundLevel);
+    ball->setVolume(Global::soundLevel);
+    rRacket->mute(Global::soundLevel);
+    lRacket->mute(Global::soundLevel);
+    btnNewGame->setVolume(Global::soundLevel);
+    btnOnePlayer->setVolume(Global::soundLevel);
+    btnTwoPlayers->setVolume(Global::soundLevel);
+    btnOptions->setVolume(Global::soundLevel);
+    btnResume->setVolume(Global::soundLevel);
+    btnQuit->setVolume(Global::soundLevel);
 
 }
 
 void PONG::processNewSettings()
 {
-    Size::ballSizeConst = opt->getBallSize();
-    Size::ballSpeedConst = opt->getBallSpeed();
-    Size::playerSizeConst = opt->getPlayerSize();
-    Size::playerSpeedConst = opt->getPlayerSpeed() * Size::ballSpeedConst;
-    if(!Size::soundLevel && opt->getSound())
+    Global::ballSizeConst = opt->getBallSize();
+    Global::ballSpeedConst = opt->getBallSpeed();
+    Global::playerSizeConst = opt->getPlayerSize();
+    Global::playerSpeedConst = opt->getPlayerSpeed() * Global::ballSpeedConst;
+    if(!Global::soundLevel && opt->getSound())
         actMute->setIcon(QIcon(":/icons/Sound-off-icon.png"));
-    if(Size::soundLevel && !opt->getSound())
+    if(Global::soundLevel && !opt->getSound())
         actMute->setIcon(QIcon(":/icons/Sound-on.png"));
-    Size::soundLevel = opt->getSound();
-    Size::scoreToWin = opt->getScoreToWin();
-    Size::endlessGame = opt->getEndlessGame();
-    Size::mouseMode = opt->getMouseMode();
-    Size::keyboardMode = opt->getKeyboardMode();
+    Global::soundLevel = opt->getSound();
+    Global::scoreToWin = opt->getScoreToWin();
+    Global::endlessGame = opt->getEndlessGame();
+    Global::mouseMode = opt->getMouseMode();
+    Global::keyboardMode = opt->getKeyboardMode();
 
     ball->resize();
     lRacket->resize();
     rRacket->resize();
-    this->setSound();
+    this->setVolume();
+}
+
+void PONG::showDialogWindow(QDialog &dialog)
+{
+    if(PONG::running)
+    {
+        timer->stop();
+        gameLoopSound->stop();
+    }
+    if(PONG::paused)
+    {
+        removePauseMenuItems();
+    }
+    if(!PONG::running && !PONG::paused)  //if is in main menu..
+    {
+        removeMainMenuItems();
+    }
+    actNewGame->setEnabled(false);
+    actOptions->setEnabled(false);
+    actPause->setEnabled(false);
+    actInfo->setEnabled(false);
+    actMute->setEnabled(false);
+
+    dialog.show();
 }
 
 
-void PONG::showInfo()
+/*void PONG::showInfo()
 {
 
 }
@@ -319,7 +321,7 @@ void PONG::showSettings()
     {
         removePauseMenuItems();
     }
-    if(!PONG::running && !PONG::paused)  //PONG::mainMenu
+    if(!PONG::running && !PONG::paused)  //if is in main menu..
     {
         removeMainMenuItems();
     }
@@ -330,7 +332,7 @@ void PONG::showSettings()
     actMute->setEnabled(false);
 
     opt->show();
-}
+}*/
 
 void PONG::resumeAfterDialogWindow()
 {
@@ -345,7 +347,7 @@ void PONG::resumeAfterDialogWindow()
         addPauseMenuItems();
         actPause->setEnabled(true);
     }
-    if(!PONG::running && !PONG::paused)
+    if(!PONG::running && !PONG::paused) //if is in main menu
     {
         addMainMenuItems();
     }
@@ -463,7 +465,7 @@ void PONG::singlePlay()
     if(!PONG::running && !PONG::paused)
         removeMainMenuItems();
     lRacket->setAIMode(true);
-    rRacket->setAIMode(true); // ////////////////
+    rRacket->setAIMode(false);
     run();
 }
 
@@ -566,7 +568,7 @@ void PONG::centerPosition()
 {
     rRacket->setPos(this->sceneRect().width() - rRacket->rect().width()-1,scene->sceneRect().height()/2 - rRacket->rect().height()/2);
     lRacket->setPos(this->sceneRect().x(),scene->sceneRect().height()/2 - lRacket->rect().height()/2);
-    ball->setPos(Size::Width/2,Size::Height/2);
+    ball->setPos(Global::Width/2,Global::Height/2);
     ball->changeTurn();
 }
 
@@ -630,10 +632,10 @@ void PONG::keyReleaseEvent(QKeyEvent *event)
 void PONG::resizeEvent(QResizeEvent* event)
 {
    QGraphicsView::resizeEvent(event);
-   PONG::oldWidth = Size::Width;
-   PONG::oldHeight = Size::Height;
-   Size::Width = this->rect().width();
-   Size::Height = this->rect().height();
+   PONG::oldWidth = Global::Width;
+   PONG::oldHeight = Global::Height;
+   Global::Width = this->rect().width();
+   Global::Height = this->rect().height();
    emit windowResized();
 }
 
@@ -665,10 +667,5 @@ void PONG::closeEvent(QCloseEvent *event)
 
 PONG::~PONG()
 {
-    /*delete ball;
-    delete rRacket;
-    delete lRacket;
-    delete scene;
-    delete timer;*/
 
 }

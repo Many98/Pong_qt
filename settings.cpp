@@ -3,18 +3,18 @@
 #include <cmath>
 #include <iostream>
 
- unsigned int Size::Width = 1920;
- unsigned int Size::Height = 1020;
- double Size::ballSizeConst = 1.0;
- double Size::ballSpeedConst = 1.0;
- double Size::playerSizeConst = 1.0;
- double Size::playerSpeedConst = 1.0 * Size::ballSpeedConst;  //change of ball and player speed are connected
- int Size::soundLevel = 100;
- int Size::oldSoundLevel = 100;
- unsigned int Size::scoreToWin = 11;
- bool Size::endlessGame = false;
- bool Size::mouseMode = false;
- bool Size::keyboardMode = true;
+ unsigned int Global::Width = 1920;
+ unsigned int Global::Height = 1020;
+ double Global::ballSizeConst = 1.0;
+ double Global::ballSpeedConst = 1.0;
+ double Global::playerSizeConst = 1.0;
+ double Global::playerSpeedConst = 1.0 * Global::ballSpeedConst;  //change of ball and player speed are connected
+ int Global::soundLevel = 100;
+ int Global::oldSoundLevel = 100;
+ unsigned int Global::scoreToWin = 11;
+ bool Global::endlessGame = false;
+ bool Global::mouseMode = false;
+ bool Global::keyboardMode = true;
 
 double random(double start, double end)
 {

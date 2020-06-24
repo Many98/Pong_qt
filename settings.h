@@ -5,7 +5,7 @@
 enum Side{Left =1,Right = 2};
 enum Dir{Up = -1, Down = 1, Stop = 0};
 
-class Size  //needs better name
+class Global  //needs better name
 {
 public:
     static unsigned int Width;   //initial game window width
