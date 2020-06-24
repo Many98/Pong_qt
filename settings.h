@@ -8,8 +8,8 @@ enum Dir{Up = -1, Down = 1, Stop = 0};
 class Size  //needs better name
 {
 public:
-    static unsigned int Width;
-    static unsigned int Height;
+    static unsigned int Width;   //initial game window width
+    static unsigned int Height;  //initial game window height
     static double ballSizeConst;
     static double ballSpeedConst;
     static double playerSizeConst;

@@ -109,10 +109,10 @@ void PONG::init()
 
     //actions
     actNewGame = new QAction(tr("&New Game"));
-    actPause = new QAction(tr("Pause"));
+    actPause = new QAction(tr("Pause/Resume"));
     actOptions = new QAction(tr("Settings"));
     actQuit = new QAction(tr("Quit"));
-    actMute = new QAction(tr("Mute"));
+    actMute = new QAction(tr("Mute/Unmute"));
     actInfo = new QAction(tr("Info"));
 }
 

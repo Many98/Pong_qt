@@ -8,7 +8,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     PONG *game = new PONG();
-    //game->newGame();
 
     return a.exec();
 }

@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>positive_reward.mp3</file>
+        <file>coin.wav</file>
+        <file>item-collect.wav</file>
+        <file>game-loop.wav</file>
+        <file>decrase.wav</file>
+        <file>border.mp3</file>
+        <file>reflect.mp3</file>
+        <file>hover.mp3</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>Sound-on.png</file>
+        <file>Sound-off-icon.png</file>
+        <file>Button-Play-icon.png</file>
+        <file>Button-Pause-icon.png</file>
+        <file>Button-Close.png</file>
+        <file>Settings-5-icon.png</file>
+        <file>Play.png</file>
+        <file>gaming.png</file>
+        <file>Info-icon.png</file>
+    </qresource>
+</RCC>

@@ -33,12 +33,14 @@ private:
             *actMute, *actInfo;
     Options *opt;
 
-    static unsigned int oldWidth,oldHeight;
-    static bool running;
+    static unsigned int oldWidth,oldHeight;  // width and height used for resizing purpose
+    static bool running;                     //game states
     static bool paused;
-    static bool mainMenu;
+
+
+    static bool mainMenu;       // unnecessary
     static bool dialogWindow;  //looks like it is not necessary
-    static bool muted;
+    static bool muted;         // unnecesary
 
     void addGameItems();
     void addMainMenuItems();

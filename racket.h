@@ -31,7 +31,6 @@ public:
     void mute(int sound);
     ~Racket() = default;
 public slots:
-    //game logic
     void increaseScore();
     void changeDirection(Dir dir);
 

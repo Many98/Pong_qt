@@ -8,7 +8,7 @@
  double Size::ballSizeConst = 1.0;
  double Size::ballSpeedConst = 1.0;
  double Size::playerSizeConst = 1.0;
- double Size::playerSpeedConst = 1.0 * Size::ballSpeedConst;
+ double Size::playerSpeedConst = 1.0 * Size::ballSpeedConst;  //change of ball and player speed are connected
  int Size::soundLevel = 100;
  int Size::oldSoundLevel = 100;
  unsigned int Size::scoreToWin = 11;
