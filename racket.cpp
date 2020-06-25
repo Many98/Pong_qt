@@ -35,6 +35,21 @@ void Racket::moveDown()
     setPos(x(),y() + speed);
 }
 
+bool Racket::getSide() const
+{
+    return side;
+}
+
+bool Racket::getAIMode() const
+{
+    return aiMode;
+}
+
+int Racket::getScore() const
+{
+    return score;
+}
+
 void Racket::resetScore()
 {
     score = 0;

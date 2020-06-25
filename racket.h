@@ -23,19 +23,17 @@ public:
     void move();
     void moveUp();
     void moveDown();
-    bool getSide() {return side;}
-    bool getAIMode() {return aiMode;}
-    int getScore() {return score;}
+    void changeDirection(Dir dir);
+    bool getSide() const;
+    bool getAIMode() const;
+    int getScore() const;
     void resetScore();
     void resize();
     void mute(int sound);
+    void setAIMode(bool enabled);
     ~Racket() = default;
 public slots:
     void increaseScore();
-    void changeDirection(Dir dir);
-
-    void setAIMode(bool enabled); 
-
 
 };
 

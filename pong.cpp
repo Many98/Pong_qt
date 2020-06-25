@@ -4,6 +4,7 @@
 #include "settings.h"
 #include "button.h"
 #include "options.h"
+#include "info.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QMainWindow>
@@ -90,6 +91,7 @@ void PONG::init()
     //items
     timer = new QTimer(this);
     opt = new Options();
+    info = new Info();
     scene = new QGraphicsScene(0,0,Global::Width,Global::Height);
     main = new QMainWindow();
     //buttons
@@ -193,7 +195,11 @@ void PONG::setupConnections()
     connect(btnResume, SIGNAL(clicked()), btnResume, SLOT(playClickedSound()));
     connect(btnNewGame, SIGNAL(clicked()), this, SLOT(newGame()));
     connect(btnNewGame, SIGNAL(clicked()), btnNewGame, SLOT(playClickedSound()));
-    connect(btnOptions, SIGNAL(clicked()), this, SLOT(showSettings()));
+    connect(btnOptions, &Button::clicked,
+            [this]()->void{
+                              showDialogWindow(*opt);
+                          }
+            );
     connect(btnOptions, SIGNAL(clicked()), this, SLOT(playClickedSound()));
     connect(btnQuit, SIGNAL(clicked()), this, SLOT(close()));
 
@@ -210,8 +216,13 @@ void PONG::setupConnections()
                               showDialogWindow(*opt);
                           }
             );
-    connect(actInfo, SIGNAL(triggered(bool)), this, SLOT(showInfo()));
+    connect(actInfo, &QAction::triggered,
+            [this]()->void{
+                              showDialogWindow(*info);
+                          }
+            );
     connect(actInfo, SIGNAL(triggered(bool)), this, SLOT(playClickedSound()));
+    connect(info, SIGNAL(finished(int)), this, SLOT(resumeAfterDialogWindow()));
 
     connect(opt, SIGNAL(rejected()), this, SLOT(resumeAfterDialogWindow()));
     connect(opt, SIGNAL(accepted()), this, SLOT(resumeAfterDialogWindow()));
@@ -303,36 +314,6 @@ void PONG::showDialogWindow(QDialog &dialog)
 
     dialog.show();
 }
-
-
-/*void PONG::showInfo()
-{
-
-}
-
-void PONG::showSettings()
-{
-    if(PONG::running)
-    {
-        timer->stop();
-        gameLoopSound->stop();
-    }
-    if(PONG::paused)
-    {
-        removePauseMenuItems();
-    }
-    if(!PONG::running && !PONG::paused)  //if is in main menu..
-    {
-        removeMainMenuItems();
-    }
-    actNewGame->setEnabled(false);
-    actOptions->setEnabled(false);
-    actPause->setEnabled(false);
-    actInfo->setEnabled(false);
-    actMute->setEnabled(false);
-
-    opt->show();
-}*/
 
 void PONG::resumeAfterDialogWindow()
 {
@@ -491,7 +472,7 @@ void PONG::playClickedSound()
 
 void PONG::update()
 {
-    collision();
+    collision(); //check for collision
     gameLoopSound->play();
     ball->move();
     if(!lRacket->getAIMode())
@@ -644,9 +625,9 @@ void PONG::closeEvent(QCloseEvent *event)
     timer->stop();
     gameLoopSound->stop();
     if(
-    QMessageBox::question(this,tr("Quit?"),
-                          tr("Do you really want to quit?"))
-    == QMessageBox::Yes){
+        QMessageBox::question(this,tr("Quit?"),
+                             tr("Do you really want to quit?"))
+        == QMessageBox::Yes){
 
         event->accept();
         main->close();

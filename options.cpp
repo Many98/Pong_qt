@@ -93,57 +93,56 @@ int Options::getVoiceLevel()
     return voiceLevel;
 }
 
-double Options::getBallSize()
+double Options::getBallSize() const
 {
     return ui->ball_size_edit->text().toDouble();
 }
 
-double Options::getBallSpeed()
+double Options::getBallSpeed() const
 {
     return ui->ball_speed_edit->text().toDouble();
 }
 
-double Options::getPlayerSize()
+double Options::getPlayerSize() const
 {
     return ui->player_size_edit->text().toDouble();
 }
 
-double Options::getPlayerSpeed()
+double Options::getPlayerSpeed() const
 {
     return ui->player_speed_edit->text().toDouble();
 }
 
-int Options::getSound()
+int Options::getSound() const
 {
     return ui->sound_edit->text().toInt();
+}
+
+
+bool Options::getMouseMode() const
+{
+    return ui->mouse_mode_radio_button->isChecked();
+}
+
+bool Options::getKeyboardMode() const
+{
+    return ui->keyboard_mode_radio_button->isChecked();
+}
+
+bool Options::getEndlessGame() const
+{
+    return ui->endless_check_box->isChecked();
+}
+
+unsigned int Options::getScoreToWin() const
+{
+    return ui->score_to_win_spin_box->value();
 }
 
 void Options::setVolume(int volume)
 {
     ui->sound_slider->setValue(volume);
 }
-
-bool Options::getMouseMode()
-{
-    return ui->mouse_mode_radio_button->isChecked();
-}
-
-bool Options::getKeyboardMode()
-{
-    return ui->keyboard_mode_radio_button->isChecked();
-}
-
-bool Options::getEndlessGame()
-{
-    return ui->endless_check_box->isChecked();
-}
-
-unsigned int Options::getScoreToWin()
-{
-    return ui->score_to_win_spin_box->value();
-}
-
-
 
 Options::~Options()
 {

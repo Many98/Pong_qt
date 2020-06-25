@@ -2,7 +2,6 @@
 #define BALL_H
 
 #include "settings.h"
-
 #include <QGraphicsRectItem>
 #include <QObject>
 #include <QGraphicsItem>

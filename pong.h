@@ -13,6 +13,7 @@ class Button;
 class QToolBar;
 class QAction;
 class Options;
+class Info;
 
 
 class PONG : public QGraphicsView //PONG is class for game
@@ -32,6 +33,7 @@ private:
     QAction *actNewGame, *actPause, *actOptions, *actQuit,
             *actMute, *actInfo;
     Options *opt;
+    Info *info;
 
     static unsigned int oldWidth,oldHeight;  // width and height used for resizing purpose
     static bool running;                     //game states
@@ -77,11 +79,9 @@ private slots:
     void playClickedSound();
     void mute();  //also unmute game
     void showDialogWindow(QDialog &dialog);
-   // void showInfo();
-    //void showSettings();
     void processNewSettings();
     void pauseGame();  //also resume game according to static variable running
-    void resumeAfterDialogWindow(); //resume but unlike pauseGame this function differentiete
+    void resumeAfterDialogWindow(); //resume but unlike pauseGame this function differentiate
                                     //between PAUSED,RUNNING and MAINMENU(!PAUSED && !RUNNING) state
 signals:
     void ballRacketCollision();

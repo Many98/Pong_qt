@@ -16,20 +16,17 @@ class Options : public QDialog
 public:
     explicit Options(QWidget *parent = 0);
     ~Options();
-    double getBallSize();
-    double getBallSpeed();
-    double getPlayerSize();
-    double getPlayerSpeed();
-    int getSound();
-    bool getMouseMode();
-    bool getKeyboardMode();
-    bool getEndlessGame();
-    unsigned int getScoreToWin();
+    double getBallSize() const;
+    double getBallSpeed() const;
+    double getPlayerSize() const;
+    double getPlayerSpeed() const;
+    int getSound() const;
+    bool getMouseMode() const;
+    bool getKeyboardMode() const;
+    bool getEndlessGame() const;
+    unsigned int getScoreToWin() const;
     static int getVoiceLevel();
-
-public slots:
     void setVolume(int volume);
-
 
 private:
     Ui::Options *ui;

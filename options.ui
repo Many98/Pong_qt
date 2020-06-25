@@ -22,7 +22,7 @@
         <bool>true</bool>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="ball_tab">
         <attribute name="title">
@@ -34,7 +34,7 @@
            <x>13</x>
            <y>12</y>
            <width>281</width>
-           <height>61</height>
+           <height>62</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -137,7 +137,7 @@
            <x>13</x>
            <y>12</y>
            <width>281</width>
-           <height>61</height>
+           <height>62</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">

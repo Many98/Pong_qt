@@ -47,7 +47,6 @@ void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Button::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     //change color to Magenta
-
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(Qt::magenta);
@@ -71,7 +70,6 @@ void Button::setVolume(int sound)
 void Button::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     //change color to dark magenta
-
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(Qt::darkMagenta);

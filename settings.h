@@ -5,11 +5,11 @@
 enum Side{Left =1,Right = 2};
 enum Dir{Up = -1, Down = 1, Stop = 0};
 
-class Global  //needs better name
+class Global
 {
 public:
-    static unsigned int Width;   //initial game window width
-    static unsigned int Height;  //initial game window height
+    static unsigned int Width;   // game window width
+    static unsigned int Height;  // game window height
     static double ballSizeConst;
     static double ballSpeedConst;
     static double playerSizeConst;
