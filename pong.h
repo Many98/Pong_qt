@@ -2,6 +2,7 @@
 #define PONG_H
 #include "settings.h"
 #include <QGraphicsView>
+#include <QMessageBox>
 
 class QGraphicsScene;
 class Racket;
@@ -21,7 +22,8 @@ class PONG : public QGraphicsView //PONG is class for game
     Q_OBJECT
 private:
     QMainWindow *main;
-    QGraphicsScene *scene;
+    QGraphicsScene *scene; //The QGraphicsScene class provides a surface for managing a large number of 2D graphical items.
+                           //The QGraphicsView class provides a widget for displaying the contents of a QGraphicsScene.
     Racket *rRacket, *lRacket;
     Ball *ball;
     QTimer *timer;
@@ -34,6 +36,7 @@ private:
             *actMute, *actInfo;
     Options *opt;
     Info *info;
+    QMessageBox *msg;
 
     static unsigned int oldWidth,oldHeight;  // width and height used for resizing purpose
     static bool running;                     //game states

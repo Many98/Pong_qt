@@ -92,6 +92,7 @@ void PONG::init()
     timer = new QTimer(this);
     opt = new Options();
     info = new Info();
+    msg = new QMessageBox;
     scene = new QGraphicsScene(0,0,Global::Width,Global::Height);
     main = new QMainWindow();
     //buttons
@@ -223,7 +224,36 @@ void PONG::setupConnections()
             );
     connect(actInfo, SIGNAL(triggered(bool)), this, SLOT(playClickedSound()));
     connect(info, SIGNAL(finished(int)), this, SLOT(resumeAfterDialogWindow()));
+    connect(this, &PONG::ballLeftBorderCollision,
+            [this]()->void{
+                              msg->setStyleSheet("QLabel{min-width: 500px;font-size: 50px;}");
+                              if(!Global::endlessGame && rRacket->getScore() >= Global::scoreToWin)
+                              {
+                                  if(lRacket->getAIMode())
+                                      msg->setText("<p align='center'>You won!<br>"); //Ypu won
+                                  else
+                                      msg->setText("<p align='center'>Right player won!<br>");
+                                  msg->show();
+                                  timer->stop();
+                              }
+                          }
+            );
+    connect(this, &PONG::ballRightBorderCollision,
+            [this]()->void{
+                              msg->setStyleSheet("QLabel{min-width: 500px;font-size: 50px;}");
+                              if(!Global::endlessGame && lRacket->getScore() >= Global::scoreToWin)
+                              {
+                                  if(lRacket->getAIMode())
+                                      msg->setText("<p align='center'>You lost!<br>"); //Ypu lose
+                                  else
+                                      msg->setText("<p align='center'>Left player won!<br>");  //Left player won
+                                  msg->show();
+                                  timer->stop();
+                              }
 
+                          }
+            );
+    connect(msg, SIGNAL(finished(int)), this, SLOT(newGame()));
     connect(opt, SIGNAL(rejected()), this, SLOT(resumeAfterDialogWindow()));
     connect(opt, SIGNAL(accepted()), this, SLOT(resumeAfterDialogWindow()));
     connect(opt, SIGNAL(accepted()), this, SLOT(processNewSettings()));
@@ -508,6 +538,10 @@ void PONG::newGame()
     }
 
     actPause->setEnabled(false);
+    actNewGame->setEnabled(true);
+    actOptions->setEnabled(true);
+    actInfo->setEnabled(true);
+    actMute->setEnabled(true);
     actPause->setIcon(QIcon(":/icons/Button-Pause-icon.png"));
 }
 

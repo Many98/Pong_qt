@@ -13,6 +13,7 @@ Window has autosclaing feature.
 
 ### Future work:
 1. mouse control option with accelerating ball
-2. Some levels
-3. Possibility to save settings and player's session
+2. Build AI player on Pytorch C++ frontend
+3. Some levels
+4. Possibility to save settings and player's session
    	

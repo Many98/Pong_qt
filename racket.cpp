@@ -45,7 +45,7 @@ bool Racket::getAIMode() const
     return aiMode;
 }
 
-int Racket::getScore() const
+unsigned int Racket::getScore() const
 {
     return score;
 }
@@ -80,5 +80,6 @@ void Racket::increaseScore()
 {
     score++;
     score_sound->play();
+
 }
 

@@ -13,7 +13,7 @@ class Racket: public QObject, public QGraphicsRectItem
 private:
     int side;
     bool aiMode = false;
-    int score;
+    unsigned int score;
     double speed = Global::Height/410.0 * Global::playerSpeedConst ;
     Dir direction = Stop;
     QMediaPlayer  *score_sound;
@@ -26,7 +26,7 @@ public:
     void changeDirection(Dir dir);
     bool getSide() const;
     bool getAIMode() const;
-    int getScore() const;
+    unsigned int getScore() const;
     void resetScore();
     void resize();
     void mute(int sound);

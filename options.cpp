@@ -9,6 +9,7 @@ Options::Options(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Options)
 {
+    this->setFixedSize(350,300);
     ui->setupUi(this);
     setUpConnections();
 

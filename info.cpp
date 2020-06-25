@@ -5,6 +5,7 @@ Info::Info(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Info)
 {
+    this->setFixedSize(400,350);
     ui->setupUi(this);
 }
 
