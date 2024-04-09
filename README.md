@@ -1,19 +1,18 @@
-# Pong_qt
+# Pong (Qt / C++)
 
-#### This game was created for practise Qt framework and of course for fun.
+This game was developed as a practice project to explore the Qt framework in C++, and of course, to provide a fun gaming experience.
 
-Game supports currently only control the pads with the keyboard. 
-There are two modes two players and single player mode.
-Game has simple gui and toolbar with posibility to control sounds and 
-sizes of game play items and their speed.Settings are not saved.
-Window has autosclaing feature.
+### Features
+- Gameplay: The game currently supports keyboard control for the pads. Players can choose between two modes: Two-Player and Single Player.
+- User Interface: It features a simple GUI, complete with a toolbar. This allows players to adjust the sound, size of gameplay items, and their speed.
+- Autoscaling: The game window supports an autoscaling feature for dynamic resizing.
 
 ### Known issues:
-1. After fast scaling of window may menu be a bit shifted.
+- Menu Alignment: Rapid scaling of the window may cause the menu to become slightly misaligned.
 
 ### Future work:
-1. mouse control option with accelerating ball
-2. Build AI player on Pytorch C++ frontend
-3. Some levels
-4. Possibility to save settings and player's session
+- Mouse Control: Introduce a mouse control option with an accelerating ball.
+- AI Player: Development of an AI player using the PyTorch C++ frontend.
+- Level Design: Addition of various levels to enhance gameplay.
+- Persistent Settings: Implement functionality to save game settings and player sessions.
    	
